@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+DIR="$(pwd)"
+DEMO_DIR=`basename "$0"`-DEMO-`date +%s`
+
+# INIT
+mkdir -p $DEMO_DIR
+cd $DEMO_DIR
+
+set -x
+
+date > file
+
+ln -s file foo
+ln -s foo bar
+
+ls -al
+
+cat foo
+cat bar
+
+rm foo
+
+cat bar
+
+set +x
+
+# CLEANUP
+cd $DIR
+rm -rf $DEMO_DIR

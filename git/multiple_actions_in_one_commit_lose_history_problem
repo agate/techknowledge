@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+DIR="$(pwd)"
+DEMO_DIR=`basename "$0"`-DEMO-`date +%s`
+
+# INIT
+mkdir -p $DEMO_DIR
+cd $DEMO_DIR
+
+set -x
+
+git init
+
+mkdir foo
+mkdir bar
+
+touch foo/.gitignore
+touch bar/.gitignore
+
+git add .
+git commit -m 'init'
+
+date +%s.%N >> foo/file
+git add .
+git commit -m 'step 1'
+
+date +%s.%N >> foo/file
+git add .
+git commit -m 'step 2'
+
+git mv foo/file bar/file
+git commit -m 'step 3'
+
+git log
+git blame bar/file
+
+git mv bar/file foo/file
+cd bar
+ln -s ../foo/file .
+cd ..
+git add .
+git commit -m 'step 4'
+
+git log
+git blame bar/file
+git blame foo/file
+
+set +x
+
+# CLEANUP
+cd $DIR
+rm -rf $DEMO_DIR

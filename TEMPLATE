@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+DIR="$(pwd)"
+DEMO_DIR=`basename "$0"`-DEMO-`date +%s`
+
+# INIT
+mkdir -p $DEMO_DIR
+cd $DEMO_DIR
+
+set -x
+
+# YOUR STUFF
+
+set +x
+
+# CLEANUP
+cd $DIR
+rm -rf $DEMO_DIR
