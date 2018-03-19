@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+DIR="$(pwd)"
+DEMO_DIR=`basename "$0"`-DEMO-`date +%s`
+
+# INIT
+mkdir -p $DEMO_DIR
+cd $DEMO_DIR
+
+set -x
+
+# Your code starts from here
+
+cat <<'END' > cmd_a
+trap "echo Got\ SIGINT\ In\ A && exit" SIGINT
+echo "pid is $$"
+
+while :			# This is the same as "while true".
+do
+  sleep 60	# This script is not really doing anything.
+done
+END
+
+cat <<'END' > cmd_b
+trap "echo Got\ SIGINT\ In\ B && exit" SIGINT
+echo "pid is $$"
+
+while :			# This is the same as "while true".
+do
+  sleep 60	# This script is not really doing anything.
+done
+END
+
+bash cmd_a | bash cmd_b
+
+# Your code ends from here
+
+set +x
+
+# CLEANUP
+cd $DIR
+rm -rf $DEMO_DIR
