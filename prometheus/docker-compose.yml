@@ -1,0 +1,15 @@
+---
+version: '3'
+services:
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./etc/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+  blackbox-exporter:
+    image: prom/blackbox-exporter
+    volumes:
+      - ./etc/blackbox_exporter/config.yml:/etc/blackbox_exporter/config.yml
+    ports:
+      - 9115:9115
